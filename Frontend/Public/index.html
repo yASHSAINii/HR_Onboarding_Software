@@ -4,27 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HR Onboarding</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/Frontend/src/output.css">
+
 </head>
 <body>
 
 
-    <div id="loginpage">
-        <div id="logincard">
-            <div class="headtext">
-                <div id="loginlogo"><img src="logo.png" alt="logo"></div>
-                <div><h2 class="wel">Welcome Back</h2></div>
-                <div><p class="subwel">Please enter your details to sign in</p></div>
+    <div id="loginpage" class="grid grid-cols-3 gap-0 h-screen grid-rows-[1fr_5fr_1fr]">
+<!-- login card -->
+        <div id="logincard" class="col-start-2 row-start-2 bg-white grid grid-rows-4 shadow-2xl border border-slate-200 rounded-xl p-5">
+            <div class="bg-white">
+                <div id="loginlogo"><img src="logo.png" alt="logo" class="h-10 mb-10"></div>
+                <div class="font-[Montserrat] text-3xl font-semibold tracking-wider"><h2>Sign into your account</h2></div>
+                <div class="font-[Montserrat]"><p>Please enter your details to sign in</p></div>
             </div>
-
-            <div id="switch">
-
+<!-- Switch -->
+            <div id="switch" class="">
+                 <div class="mb-8 bg-black">
+                <div class="inline-flex rounded-xl bg-gray-100 p-1.5 shadow-inner items-center">
+                <input type="radio" id="candidate" name="userRole" class="hidden" checked>
+                <input type="radio" id="recruiter" name="userRole" class="hidden">
+                
+                <label for="candidate" 
+                       class="toggle-btn flex items-center justify-center px-8 py-3 rounded-lg cursor-pointer toggle-transition bg-blue-500 text-white shadow-md">
+                    <i class="fas fa-user-graduate mr-3"></i>
+                    <span class="font-semibold text-lg">Candidate</span>
+                </label>
+                
+                <label for="recruiter" 
+                       class="toggle-btn flex items-center justify-center px-8 py-3 rounded-lg cursor-pointer toggle-transition bg-white text-gray-700">
+                    <i class="fas fa-briefcase mr-3"></i>
+                    <span class="font-semibold text-lg">Recruiter</span>
+                </label>
+                </div>
+                </div>
             </div>
-
-            <div id="detailentry">
+<!-- Login details -->
+            <div id="detailentry" class="bg-blue-200">
 
             </div>
 
