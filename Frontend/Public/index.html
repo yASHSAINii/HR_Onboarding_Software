@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HR Onboarding</title>
+    <title>Staffo</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/Frontend/src/output.css">
 
@@ -15,29 +18,30 @@
 <body>
 
 
-    <div id="loginpage" class="grid grid-cols-3 gap-0 h-screen grid-rows-[1fr_5fr_1fr]">
+    <div id="loginpage" class="grid grid-cols-3 gap-0 h-screen grid-rows-[2fr_4fr_2fr]">
 <!-- login card -->
-        <div id="logincard" class="col-start-2 row-start-2 bg-white grid grid-rows-4 shadow-2xl border border-slate-200 rounded-xl p-5">
+        <div id="logincard" class="col-start-2 row-start-2 bg-white h-full grid grid-rows-[1fr_0.2fr_3fr] shadow-2xl border border-slate-200 rounded-2xl p-5">
+
             <div class="bg-white">
-                <div id="loginlogo"><img src="logo.png" alt="logo" class="h-10 mb-10"></div>
+                <div id="loginlogo" class="grid place-items-center"><img src="logo.png" alt="logo" class="h-9 mb-10"></div>
                 <div class="font-[Montserrat] text-3xl font-semibold tracking-wider"><h2>Sign into your account</h2></div>
                 <div class="font-[Montserrat]"><p>Please enter your details to sign in</p></div>
             </div>
 <!-- Switch -->
-            <div id="switch" class="">
-                 <div class="mb-8 bg-black">
+            <div id="switch" class="pt-4">
+                 <div class="mb-5 grid place-items-center">
                 <div class="inline-flex rounded-xl bg-gray-100 p-1.5 shadow-inner items-center">
                 <input type="radio" id="candidate" name="userRole" class="hidden" checked>
                 <input type="radio" id="recruiter" name="userRole" class="hidden">
                 
                 <label for="candidate" 
-                       class="toggle-btn flex items-center justify-center px-8 py-3 rounded-lg cursor-pointer toggle-transition bg-blue-500 text-white shadow-md">
+                       class="toggle-btn flex items-center justify-center px-17 py-2 rounded-lg cursor-pointer toggle-transition bg-blue-500 text-white shadow-md mr-0.5">
                     <i class="fas fa-user-graduate mr-3"></i>
                     <span class="font-semibold text-lg">Candidate</span>
                 </label>
                 
                 <label for="recruiter" 
-                       class="toggle-btn flex items-center justify-center px-8 py-3 rounded-lg cursor-pointer toggle-transition bg-white text-gray-700">
+                       class="toggle-btn flex items-center justify-center px-17 py-2 rounded-lg cursor-pointer toggle-transition bg-white text-gray-700 ml-0.5">
                     <i class="fas fa-briefcase mr-3"></i>
                     <span class="font-semibold text-lg">Recruiter</span>
                 </label>
@@ -45,12 +49,20 @@
                 </div>
             </div>
 <!-- Login details -->
-            <div id="detailentry" class="bg-blue-200">
+            <div id="detailsform" class="">
+                <form action="">
+                    <div id="emailtxt" class="">Email Address</div>
+                    <input type="email" placeholder="name@company.com" required class="border border-slate-200 rounded p-1 pl-2 w-full">
+                    <div id="passwordtxt" class="mt-5">Password</div>
+                    <input type="password" placeholder="••••••••••••" class="border border-slate-200 rounded p-1 pl-2 mb-8 w-full">
+                    
+                    <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
 
-            </div>
-
-            <div id="signinbutton">
-
+                    <div id="signinbutton" class="flex justify-center">
+                        <button class="border border-blue-500 bg-blue-500 text-white font-semibold m-8 mb-5 p-3 px-25 rounded-lg flex justify-center text-lg">Sign in</button>
+                    </div>
+                    <div class="flex justify-center text-sm">Forgot Password? <a href="https://mail.google.com/mail/?view=cm&fs=1&to=admin@yourcompany.com" class="ml-1 text-blue-500 font-semibold hover:underline">Contact Admin</a></div>
+                </form>
             </div>
         </div>
     </div>
