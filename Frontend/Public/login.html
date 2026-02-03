@@ -3,13 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staffo</title>
+    <title>DayZero</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Chango&display=swap" rel="stylesheet">
+
 <link rel="icon" href="human.png" type="image/png">
+
+<script src="https://unpkg.com/lottie-web@latest/build/player/lottie.min.js"></script>
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
@@ -19,8 +25,27 @@
 </head>
 <body>
 
+<!-- header -->
+    <div id="loginpage" class="grid grid-cols-3 gap-0 h-screen grid-rows-[2fr_4fr_2fr]">
+        <div id="lottie-animation" class="fixed inset-0 -z-1 opacity-65 pointer-events-none"></div>
+         <header class="absolute inset-x-0 top-0 z-50 bg-white">
+    <nav aria-label="Global" class="flex items-center justify-between px-6 py-2 lg:px-8">
+      <div class="flex lg:flex-1">
+        <a href="#" class="-m-1.5 p-1.5">
+          <img src="human.png" alt="" class="h-10 w-auto border border-white rounded-3xl bg-white" />
+        </a>
+        <div class="pt-1 px-3 text-2xl text-black font-[Bowlby_One_SC] font-weight-50 ">Day <span class="text-indigo-500">Zero</span></div>
+      </div>
+      
+    
+      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+        <button class="text-black font-semibold pt-1 px-5 cursor-pointer"><a href="index.html">Home</a></button>
+        <div class="border border-indigo-500 px-2 py-1 rounded-md bg-indigo-500"><a href="login.html" class="text-sm/6 font-semibold text-white">Log in <span aria-hidden="true">&rarr;</span></a></div>
+      </div>
+    </nav>
+    <hr class="border-slate-200">
+  </header>
 
-    <div id="loginpage" class="grid grid-cols-3 gap-0 h-screen grid-rows-[2fr_4fr_2fr] bg-zinc-50">
 <!-- login card -->
         <div id="logincard" class="col-start-2 row-start-2 bg-white h-full grid grid-rows-[1fr_0.2fr_3fr] shadow-2xl border border-slate-200 rounded-2xl p-5">
 
@@ -72,6 +97,15 @@
  <!-- Javascript -->
     <script src="/Frontend/Public/JS/animation.js"></script>
 
+<script>
+  lottie.loadAnimation({
+    container: document.getElementById('lottie-animation'),
+    renderer: 'canvas',
+    loop: true,
+    autoplay: true,
+    path: 'bg.json'
+  });
+</script>
 
     </body>
 </html>

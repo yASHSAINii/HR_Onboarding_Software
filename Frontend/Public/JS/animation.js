@@ -32,4 +32,3 @@
         recruiter.addEventListener("change", colorswitch);
         
         colorswitch();
-    
