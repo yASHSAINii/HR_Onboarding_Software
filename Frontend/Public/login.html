@@ -39,8 +39,8 @@
       
     
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <button class="text-black font-semibold px-5 cursor-pointer"><a href="index.html">Home</a></button>
-        <div class="border border-indigo-500 px-2 py-1 rounded-md bg-indigo-500"><a href="login.html" class="font-semibold text-white py-1">Log in <span aria-hidden="true">&rarr;</span></a></div>
+        <button class="text-black font-semibold px-5 cursor-pointer"><a href="index.html" class="py-1">Home</a></button>
+        <div class="border border-indigo-500 px-2 py-1 rounded-md bg-indigo-500 hover:bg-indigo-600"><a href="login.html" class="font-semibold text-white py-1">Log in <span aria-hidden="true">&rarr;</span></a></div>
       </div>
     </nav>
   </header>
@@ -61,7 +61,7 @@
                 <input type="radio" id="recruiter" name="userrole" class="hidden">
                 
                 <label for="candidate" 
-                       class="toggle-btn flex items-center justify-center px-17 py-2 rounded-lg cursor-pointer toggle-transition bg-blue-500 text-white shadow-md mr-0.5">
+                       class="toggle-btn flex items-center justify-center px-17 py-2 rounded-lg cursor-pointer toggle-transition bg-blue-600 text-white shadow-md mr-0.5">
                     <i class="fas fa-user-graduate mr-3"></i>
                     <span class="font-semibold text-lg">Candidate</span>
                 </label>
@@ -85,7 +85,7 @@
                     <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
 
                     <div class="flex justify-center">
-                        <button id="signinbutton" class="border border-blue-500 bg-blue-500 text-white font-semibold m-8 mb-5 p-3 px-25 rounded-lg flex justify-center text-lg cursor-pointer">Sign in</button>
+                        <button id="signinbutton" class="border border-blue-500 bg-blue-600 text-white font-semibold m-8 mb-5 p-3 px-25 rounded-lg flex justify-center text-lg cursor-pointer">Sign in</button>
                     </div>
                     <div class="flex justify-center text-sm">Forgot Password? <a href="https://mail.google.com/mail/?view=cm&fs=1&to=admin@yourcompany.com" class="ml-1 text-blue-500 font-semibold hover:underline">Contact Admin</a></div>
                 </form>
@@ -105,6 +105,10 @@
     path: 'bg.json'
   });
 </script>
+
+<!-- Add login.js script -->
+<script src="/Frontend/Public/JS/login.js"></script>
+
 
     </body>
 </html>
