@@ -1,0 +1,1 @@
+// File: middleware/authMiddleware.js 
