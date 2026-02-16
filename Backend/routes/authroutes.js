@@ -1,5 +1,5 @@
 import express from 'express';
-import bcrypt from 'bcryptjs';  // ADD THIS LINE
+import bcrypt from 'bcryptjs'; 
 const router = express.Router();
 
 router.get('/test', (req, res) => {
@@ -39,7 +39,7 @@ router.post('/admin-login', async (req, res) => {
     
     const user = result.rows[0];
     
-    // 🔥 IMPORTANT CHANGE: Use bcrypt.compare instead of direct comparison
+    // IMPORTANT CHANGE: Use bcrypt.compare instead of direct comparison
     const isPasswordValid = await bcrypt.compare(password, user.password);
     
     if (!isPasswordValid) {
