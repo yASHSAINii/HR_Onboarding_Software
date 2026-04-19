@@ -1,16 +1,17 @@
-import pool from './config/db.config.js';
+const { Pool } = require('pg');
+require('dotenv').config();
 
-// Test database connection (optional, can be removed)
-const testConnection = async () => {
-  try {
-    const client = await pool.connect();
-    console.log('✅ Database connected successfully');
-    client.release();
-  } catch (err) {
-    console.error('❌ Database connection error:', err.message);
-  }
-};
+const pool = new Pool({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+});
 
-testConnection();
+pool.connect((err, client, release) => {
+  if (err) console.error('DB connection failed:', err.message)
+  else { console.log('Connected to PostgreSQL'); release() }
+})
 
-export default pool;
+module.exports = pool;

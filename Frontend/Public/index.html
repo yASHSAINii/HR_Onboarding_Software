@@ -1,126 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DayZero</title>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Chango&display=swap" rel="stylesheet">
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
 
-    <link rel="icon" href="human.png" type="image/png">
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
 
-    <script src="https://unpkg.com/lottie-web@latest/build/player/lottie.min.js"></script>
-
-    <link rel="stylesheet" href="/Frontend/src/output.css">
-</head>
-
-
-<body>
-
-<!-- header -->
-<!-- gradient -->
-    <div class="h-screen bg-linear-to-b from-indigo-300 to-gray-100">
-  <header class="absolute inset-x-0 top-0 z-50">
-    <nav aria-label="Global" class="flex items-center justify-between px-6 py-2 lg:px-8">
-      <div class="flex lg:flex-1">
-        <a href="#" class="-m-1.5 p-1.5">
-          <img src="human.png" alt="" class="h-10 w-auto border border-white rounded-3xl bg-white" />
-        </a>
-        <div class="pt-1 px-3 text-2xl text-black font-[Bowlby_One_SC] font-weight-50 ">Day <span class="text-indigo-600">Zero</span></div>
-      </div>
-      
-    
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <button class="text-black font-semibold px-5 cursor-pointer"><a href="index.html" class="py-1">Home</a></button>
-        <div class="border border-indigo-600 px-2 py-1 rounded-md bg-indigo-600 hover:bg-indigo-700"><a href="login.html" class="font-semibold text-white py-1">Log in <span aria-hidden="true">&rarr;</span></a></div>
-      </div>
-    </nav>
-  </header>
-
-<!-- homePage -->
-  <div class="relative isolate px-6 pt-14 lg:px-8">
-
-    <div class="mx-auto max-w-2xl py-32 pt-26 pb-10">
-<!-- animation -->
-          <div id="lottie-animation" class="absolute inset-0 -z-1 opacity-45 pointer-events-none h-100 mt-10"></div>
-<!-- animation -->          
-      <div class="hidden sm:mb-8 sm:flex sm:justify-center">
-        <div class="relative rounded-full px-3 py-1 text-sm/6 text-blue-600 ring-1 ring-blue/100 font-semibold hover:ring-2 ring-blue/100">
-          New Recruitment Drive 2026 Active 
-        </div>
-      </div>
-      <div class="text-center">
-        <h1 class="text-5xl font-semibold tracking-tight text-balance text-black sm:text-7xl">Onboarding made <span aria-hidden="true" class="text-blue-600">Seamless</span></h1>
-        <p class="mt-8 text-lg font-medium text-pretty text-gray-600 sm:text-xl/8">A centralized secure hub for candidates and recruiters. Track status, verify documnets, and manage joining formalities in one place.</p>
-      </div>
-      <hr class="border-gray-400 mt-7">
-      <div class="text-center">
-        <h3 class="mt-5 text-2xl tracking-wider font-bold text-gray-600">PLATFORM FEATURES</h3>
-        <p class="text-gray-600">Everything you need for a smooth transition from "Hired" to "Onboarded"</p>
-      </div>
-    </div>
-  </div>
-
-<!-- feature cards   -->
- 
-    <div class="grid grid-cols-3 gap-20 px-30">
-<!-- card-1 -->
-        <div class="min-h-45 rounded-md border border-slate-300 bg-slate-100 shadow-xl transition-transform duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl">
-          <div>
-            <img class="h-8 mx-3 mt-3 opacity-75" src="/Frontend/Public/icons/personal-configuration-interface-symbol.png" alt="profile icon">
-          </div>
-          <div class="mx-3 pt-2 text-xl text-gray-500 font-bold">
-            Candidate Dashboard
-          </div>
-          <div class="mx-3 pt-2 text-gray-500">
-            Real-time view of your application status. Track what's pending and what's approved instantly.
-          </div>
-        </div>
-<!-- card-2 -->
-        <div class="min-h-45 rounded-md border border-slate-300 bg-slate-100 shadow-xl transition-transform duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl">
-          <div>
-            <img class="h-8 mx-3 mt-3 opacity-75" src="/Frontend/Public/icons/secure.png" alt="profile icon">
-          </div>
-          <div class="mx-3 pt-2 text-xl text-gray-500 font-bold">
-            Recruiter Controls
-          </div>
-          <div class="mx-3 pt-2 text-gray-500">
-           Manage incoming candidates, issue offer letters, and verify background checks efficiently.
-          </div>
-        </div>
-<!-- card-3 -->
-        <div class="min-h-45 rounded-md border border-slate-300 bg-slate-100 shadow-xl transition-transform duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl">
-          <div>
-            <img class="h-8 mx-3 mt-3 opacity-75" src="/Frontend/Public/icons/google-docs.png" alt="profile icon">
-          </div>
-          <div class="mx-3 pt-2 text-xl text-gray-500 font-bold">
-            Secure Documents
-          </div>
-          <div class="mx-3 pt-2 text-gray-500">
-            End-to-end encrypted uploads for sensitive documents like Aadhar, PAN, and Appointment letters.
-          </div>
-        </div>
-    </div>
-
-
-</div>
-
-
-
-<!-- Javascript -->
-<!-- animationJS -->
-
-<script>
-  lottie.loadAnimation({
-    container: document.getElementById('lottie-animation'),
-    renderer: 'canvas',
-    loop: true,
-    autoplay: true,
-    path: 'abstract.json'
-  });
-</script>
-
-</body>
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
 </html>

@@ -1,3 +1,7 @@
-node_modules/
+node_modules
 .env
 *.log
+structure.txt
+.gitignore
+.vscode
+0ld-frontend
