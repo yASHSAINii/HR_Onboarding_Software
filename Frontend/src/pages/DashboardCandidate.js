@@ -52,7 +52,7 @@ const DashboardCandidate = () => {
       setSelectedFile(prev => ({ ...prev, [type]: null }));
       if (type === 'medical' && medicalInputRef.current) medicalInputRef.current.value = '';
       if (type === 'police' && policeInputRef.current) policeInputRef.current.value = '';
-      fetchDocuments(); // refresh
+      fetchDocuments();
     } catch (err) {
       const msg = err.response?.data?.error || 'Upload failed';
       setUploadSuccess({ type, success: false, error: msg });
@@ -74,19 +74,21 @@ const DashboardCandidate = () => {
   };
 
   return (
-    <section id="dashboard" className="block">
-      <div className="bg-gradient-to-br from-primary to-rose-800 text-white rounded-12px p-10 mb-8">
+    <section className="block">
+      {/* Welcome banner – exact original gradient */}
+      <div className="bg-[linear-gradient(135deg,#4F46E5_0%,#9F1239_70%)] text-white rounded-[12px] p-10 mb-8">
         <h2 className="text-3xl font-bold mb-3">Onboarding Progress</h2>
       </div>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-6 mb-8">
+      {/* Stats grid – responsive auto‑fit */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {/* Medical Examination Card */}
-        <div className="bg-white rounded-12px p-[15px] items-center gap-5 shadow-custom">
-          <div className="flex">
-            <div className="w-15 h-15 rounded-12px flex items-center justify-center bg-blue-50">
-              <img src={med} height={30} alt="medical" />
+        <div className="bg-white rounded-[12px] p-[15px] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)]">
+          <div className="flex items-center gap-3">
+            <div className="w-[60px] h-[60px] rounded-[12px] flex items-center justify-center bg-[#e3f2fd]">
+              <img src={med} height={30} alt="medical" className="h-[30px] w-auto" />
             </div>
-            <div className="text-[17.2px] font-bold mt-1.5 mb-1 pl-2">
+            <div className="text-[17.2px] font-bold">
               <p>Medical Examination</p>
               {getStatusBadge(documents.medical_status)}
             </div>
@@ -99,21 +101,21 @@ const DashboardCandidate = () => {
               accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
               onChange={(e) => handleFileSelect('medical', e.target.files[0])}
               disabled={uploading.medical || !!documents.medical_file_path}
-              className="mb-2"
+              className="mb-2 w-full"
             />
-            <div>
+            <div className="flex items-center flex-wrap gap-2">
               <button
                 onClick={() => handleUpload('medical')}
-                className="bg-primary text-white border-none py-2.5 px-5 rounded-md cursor-pointer hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed mr-2"
+                className="bg-[#4F46E5] text-white border-none py-2.5 px-5 rounded-md cursor-pointer hover:bg-[#4338CA] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={uploading.medical || !selectedFile.medical || !!documents.medical_file_path}
               >
                 {uploading.medical ? 'Uploading...' : 'Upload'}
               </button>
+              {documents.medical_file_path && <span className="text-orange-500 text-sm">✅ Document already uploaded. Contact recruiter for changes.</span>}
+              {uploading.medical && <span className="text-sm">Uploading...</span>}
+              {uploadSuccess?.type === 'medical' && uploadSuccess.success && <span className="text-green-600 text-sm">✅ Upload successful!</span>}
+              {uploadSuccess?.type === 'medical' && !uploadSuccess.success && <span className="text-red-600 text-sm">❌ {uploadSuccess.error}</span>}
             </div>
-            {documents.medical_file_path && <span className="text-orange-500 ml-2.5 inline-block mt-2">✅ Document already uploaded. Contact recruiter for changes.</span>}
-            {uploading.medical && <span className="ml-2.5">Uploading...</span>}
-            {uploadSuccess?.type === 'medical' && uploadSuccess.success && <span className="text-green-600 ml-2.5">✅ Upload successful!</span>}
-            {uploadSuccess?.type === 'medical' && !uploadSuccess.success && <span className="text-red-600 ml-2.5">❌ {uploadSuccess.error}</span>}
           </div>
           {documents.medical_reason && documents.medical_status === 'rejected' && (
             <div className="text-red-600 mt-2 text-sm">Reason: {documents.medical_reason}</div>
@@ -121,12 +123,12 @@ const DashboardCandidate = () => {
         </div>
 
         {/* Police Verification Card */}
-        <div className="bg-white rounded-12px p-[15px] items-center gap-5 shadow-custom">
-          <div className="flex">
-            <div className="w-15 h-15 rounded-12px flex items-center justify-center bg-amber-50">
-              <img src={si} height={30} alt="police" />
+        <div className="bg-white rounded-[12px] p-[15px] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)]">
+          <div className="flex items-center gap-3">
+            <div className="w-[60px] h-[60px] rounded-[12px] flex items-center justify-center bg-[#fff3e0]">
+              <img src={si} height={30} alt="police" className="h-[30px] w-auto" />
             </div>
-            <div className="text-[17.2px] font-bold mt-1.5 mb-1 pl-2">
+            <div className="text-[17.2px] font-bold">
               <p>Police Verification</p>
               {getStatusBadge(documents.police_status)}
             </div>
@@ -139,21 +141,21 @@ const DashboardCandidate = () => {
               accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
               onChange={(e) => handleFileSelect('police', e.target.files[0])}
               disabled={uploading.police || !!documents.police_file_path}
-              className="mb-2"
+              className="mb-2 w-full"
             />
-            <div>
+            <div className="flex items-center flex-wrap gap-2">
               <button
                 onClick={() => handleUpload('police')}
-                className="bg-primary text-white border-none py-2.5 px-5 rounded-md cursor-pointer hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed mr-2"
+                className="bg-[#4F46E5] text-white border-none py-2.5 px-5 rounded-md cursor-pointer hover:bg-[#4338CA] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={uploading.police || !selectedFile.police || !!documents.police_file_path}
               >
                 {uploading.police ? 'Uploading...' : 'Upload'}
               </button>
+              {documents.police_file_path && <span className="text-orange-500 text-sm">✅ Document already uploaded. Contact recruiter for changes.</span>}
+              {uploading.police && <span className="text-sm">Uploading...</span>}
+              {uploadSuccess?.type === 'police' && uploadSuccess.success && <span className="text-green-600 text-sm">✅ Upload successful!</span>}
+              {uploadSuccess?.type === 'police' && !uploadSuccess.success && <span className="text-red-600 text-sm">❌ {uploadSuccess.error}</span>}
             </div>
-            {documents.police_file_path && <span className="text-orange-500 ml-2.5 inline-block mt-2">✅ Document already uploaded. Contact recruiter for changes.</span>}
-            {uploading.police && <span className="ml-2.5">Uploading...</span>}
-            {uploadSuccess?.type === 'police' && uploadSuccess.success && <span className="text-green-600 ml-2.5">✅ Upload successful!</span>}
-            {uploadSuccess?.type === 'police' && !uploadSuccess.success && <span className="text-red-600 ml-2.5">❌ {uploadSuccess.error}</span>}
           </div>
           {documents.police_reason && documents.police_status === 'rejected' && (
             <div className="text-red-600 mt-2 text-sm">Reason: {documents.police_reason}</div>
@@ -161,12 +163,12 @@ const DashboardCandidate = () => {
         </div>
 
         {/* Final Clearance Card – status only */}
-        <div className="bg-white rounded-12px p-[15px] items-center gap-5 shadow-custom">
-          <div className="flex">
-            <div className="w-15 h-15 rounded-12px flex items-center justify-center bg-green-50">
-              <img src={li} height={30} alt="final" />
+        <div className="bg-white rounded-[12px] p-[15px] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)]">
+          <div className="flex items-center gap-3">
+            <div className="w-[60px] h-[60px] rounded-[12px] flex items-center justify-center bg-[#e8f5e9]">
+              <img src={li} height={30} alt="final" className="h-[30px] w-auto" />
             </div>
-            <div className="text-[17.2px] font-bold mt-1.5 mb-1 pl-2">
+            <div className="text-[17.2px] font-bold">
               <p>Final Clearance</p>
               {getStatusBadge(documents.final_status)}
             </div>
@@ -174,12 +176,12 @@ const DashboardCandidate = () => {
         </div>
 
         {/* Joining Letter Card – status only */}
-        <div className="bg-white rounded-12px p-[15px] items-center gap-5 shadow-custom">
-          <div className="flex">
-            <div className="w-15 h-15 rounded-12px flex items-center justify-center bg-purple-50">
-              <img src={bri} height={30} alt="joining" />
+        <div className="bg-white rounded-[12px] p-[15px] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)]">
+          <div className="flex items-center gap-3">
+            <div className="w-[60px] h-[60px] rounded-[12px] flex items-center justify-center bg-[#f3e5f5]">
+              <img src={bri} height={30} alt="joining" className="h-[30px] w-auto" />
             </div>
-            <div className="text-[17.2px] font-bold mt-1.5 mb-1 pl-2">
+            <div className="text-[17.2px] font-bold">
               <p>Joining Letter</p>
               {getStatusBadge(documents.joining_status)}
             </div>
@@ -189,5 +191,6 @@ const DashboardCandidate = () => {
     </section>
   );
 };
+
 
 export default DashboardCandidate;

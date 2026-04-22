@@ -49,7 +49,7 @@ const Notifications = () => {
         <button
           onClick={fetchNotifications}
           disabled={refreshing}
-          className="bg-primary text-white border-none py-2 px-4 rounded-12px font-semibold cursor-pointer transition-all duration-300 hover:bg-indigo-700 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="bg-indigo-600 text-white border-none py-2 px-4 rounded-[12px] font-semibold cursor-pointer transition-all duration-300 hover:bg-indigo-700 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {refreshing ? 'Refreshing...' : 'Refresh'}
         </button>

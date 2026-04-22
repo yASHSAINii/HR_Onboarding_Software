@@ -5,6 +5,7 @@ import TemplateEditor from '../components/TemplateEditor';
 const Templates = () => {
   const [templates, setTemplates] = useState([]);
   const [editingTemplate, setEditingTemplate] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -31,7 +32,6 @@ const Templates = () => {
     }
   };
 
-  // Helper for preview (replaces placeholders with sample values)
   const replacePlaceholdersWithSample = (text) => {
     if (!text) return '';
     const sampleData = {
@@ -49,29 +49,54 @@ const Templates = () => {
     return result;
   };
 
+  const openCreateModal = () => {
+    setEditingTemplate(null);
+    setShowModal(true);
+  };
+
+  const openEditModal = (template) => {
+    setEditingTemplate(template);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setEditingTemplate(null);
+  };
+
+  const handleSave = () => {
+    closeModal();
+    loadTemplates();
+  };
+
   return (
-    <section id="templates" className="block">
+    <section className="block">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold text-dark">Email Templates</h2>
+        <h2 className="text-xl font-bold text-[#1F2937]">Email Templates</h2>
         <div className="flex gap-3">
           <button
-            className="bg-primary text-white border-none py-3 px-6 rounded-12px font-semibold cursor-pointer flex items-center gap-2 transition-all duration-300 hover:bg-indigo-700 hover:-translate-y-0.5"
-            onClick={() => setEditingTemplate({})}
+            className="bg-[#4F46E5] text-white border-none py-3 px-6 rounded-[12px] font-semibold cursor-pointer flex items-center gap-2 transition-all duration-300 hover:bg-[#4338CA] hover:-translate-y-0.5"
+            onClick={openCreateModal}
           >
             Create New Template
           </button>
         </div>
       </div>
 
-      <div className="bg-white rounded-12px shadow-custom mt-[15px]">
-        <ul className="list-none p-0">
+      {/* Templates list card */}
+      <div className="bg-white rounded-[12px] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)] mt-[15px]">
+        <ul className="list-none p-0 m-0">
           {templates.map((t) => (
-            <li key={t.id} className="my-2.5 py-2.5 px-4 border-b border-gray-200">
-              <strong>{replacePlaceholdersWithSample(t.name)}</strong> – {replacePlaceholdersWithSample(t.subject)}
-              <div className="mt-2.5">
+            <li key={t.id} className="my-0 py-4 px-6 border-b border-[#E5E7EB] last:border-0">
+              <div>
+                <strong className="text-[#1F2937]">{replacePlaceholdersWithSample(t.name)}</strong>
+                <span className="text-[#6B7280] mx-2">–</span>
+                <span className="text-[#6B7280]">{replacePlaceholdersWithSample(t.subject)}</span>
+              </div>
+              <div className="mt-3">
                 <button
-                  onClick={() => setEditingTemplate(t)}
-                  className="bg-primary text-white border-none py-2 px-4 rounded-md cursor-pointer hover:bg-indigo-700 transition-colors mr-2.5"
+                  onClick={() => openEditModal(t)}
+                  className="bg-[#4F46E5] text-white border-none py-2 px-4 rounded-md cursor-pointer hover:bg-[#4338CA] transition-colors mr-3"
                 >
                   Edit
                 </button>
@@ -84,22 +109,43 @@ const Templates = () => {
               </div>
             </li>
           ))}
-          {templates.length === 0 && <li className="my-2.5 py-2.5 px-4">No templates found. Create one.</li>}
+          {templates.length === 0 && (
+            <li className="py-4 px-6 text-center text-[#6B7280]">No templates found. Create one.</li>
+          )}
         </ul>
       </div>
 
-      <div className="bg-white rounded-12px shadow-custom mt-[15px]">
-        {editingTemplate && (
-          <TemplateEditor
-            template={editingTemplate}
-            onSave={() => {
-              setEditingTemplate(null);
-              loadTemplates();
-            }}
-            onCancel={() => setEditingTemplate(null)}
-          />
-        )}
-      </div>
+      {/* Modal for Template Editor */}
+      {showModal && (
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+          onClick={closeModal}
+        >
+          <div
+            className="bg-white rounded-[12px] w-[90%] max-w-3xl max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-6 border-b border-[#E5E7EB] flex justify-between items-center">
+              <h3 className="text-lg font-semibold">
+                {editingTemplate ? 'Edit Template' : 'Create New Template'}
+              </h3>
+              <span
+                className="text-3xl cursor-pointer text-[#6B7280] hover:text-[#1F2937] leading-none"
+                onClick={closeModal}
+              >
+                &times;
+              </span>
+            </div>
+            <div className="p-6">
+              <TemplateEditor
+                template={editingTemplate}
+                onSave={handleSave}
+                onCancel={closeModal}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

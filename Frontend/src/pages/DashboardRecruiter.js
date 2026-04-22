@@ -73,7 +73,7 @@ const DashboardRecruiter = () => {
   };
 
   const handleRedirect = (statusKey, statusValue) => {
-    let url = `/UserManagement?${statusKey}=${statusValue}`;
+    let url = `/app/UserManagement?${statusKey}=${statusValue}`;
     if (selectedBatch !== 'all') url += `&batch=${selectedBatch}`;
     navigate(url);
   };
@@ -230,7 +230,7 @@ const DashboardRecruiter = () => {
           <div className="py-5 px-6 border-b border-[#E5E7EB] flex justify-between items-center">
             <h3 className="text-lg font-semibold">Recent New Hires</h3>
             <button
-              onClick={() => navigate('/UserManagement')}
+              onClick={() => navigate('/app/UserManagement')}
               className="text-[#4F46E5] no-underline font-medium text-sm bg-transparent border-0 cursor-pointer hover:underline"
             >
               View All

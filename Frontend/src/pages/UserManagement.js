@@ -32,7 +32,7 @@ const UserManagement = () => {
   const [batchOptions, setBatchOptions] = useState([]);
   const [resetPassword, setResetPassword] = useState(false);
 
-  // Parse URL query parameters on mount and when location changes
+  // Parse URL query parameters
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const newFilters = {
@@ -108,9 +108,7 @@ const UserManagement = () => {
       });
       setUploadResult({ success: true, message: res.data.message });
       setUploadFile(null);
-      // Clear file input
       document.getElementById('csv-upload-input').value = '';
-      // Refresh user list after a short delay
       setTimeout(() => {
         fetchUsers();
         fetchBatchOptions();
@@ -127,7 +125,6 @@ const UserManagement = () => {
     const newFilters = { ...filters, [key]: value };
     setFilters(newFilters);
     setPage(1);
-    // Update URL query parameters
     const params = new URLSearchParams();
     if (newFilters.role) params.set('role', newFilters.role);
     if (newFilters.batch) params.set('batch', newFilters.batch);
@@ -172,7 +169,6 @@ const UserManagement = () => {
   const handleSaveEdit = async () => {
     setUpdating(true);
     try {
-      // Update user profile
       await api.patch(`/recruiter/users/${editingUser.employee_id}`, {
         first_name: editForm.first_name,
         last_name: editForm.last_name,
@@ -183,10 +179,8 @@ const UserManagement = () => {
         status: editForm.status,
       });
 
-      // If user is a candidate, update document statuses and permissions
       if (editForm.role === 'candidate') {
         const updates = [];
-
         if (editForm.medical_status !== editingUser.medical_status) {
           updates.push(api.patch(`/recruiter/candidates/${editingUser.employee_id}/documents/medical`, { status: editForm.medical_status, reason: editForm.medical_reason || '' }));
         }
@@ -205,11 +199,9 @@ const UserManagement = () => {
         if (editForm.police_upload_allowed !== (editingUser.police_upload_allowed ?? true)) {
           updates.push(api.patch(`/recruiter/candidates/${editingUser.employee_id}/documents/police/permission`, { allowed: editForm.police_upload_allowed }));
         }
-
         await Promise.all(updates);
       }
 
-      // Handle password reset if checkbox was checked
       if (resetPassword && editingUser.role === 'candidate') {
         await api.post(`/recruiter/candidates/${editingUser.employee_id}/reset-password`);
         alert('Password reset initiated. New OTP has been sent to the candidate.');
@@ -255,10 +247,10 @@ const UserManagement = () => {
   return (
     <section className="block">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold text-dark">User Management</h2>
+        <h2 className="text-xl font-bold text-[#1F2937]">User Management</h2>
         <div className="flex gap-3">
           <button
-            className="bg-primary text-white border-none py-3 px-6 rounded-12px font-semibold cursor-pointer flex items-center gap-2 transition-all duration-300 hover:bg-indigo-700 hover:-translate-y-0.5"
+            className="bg-[#4F46E5] text-white border-none py-3 px-6 rounded-[12px] font-semibold cursor-pointer flex items-center gap-2 transition-all duration-300 hover:bg-[#4338CA] hover:-translate-y-0.5"
             onClick={() => setShowUploadModal(true)}
           >
             Upload CSV
@@ -266,7 +258,8 @@ const UserManagement = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-12px shadow-custom mt-[15px] mb-5">
+      {/* Filters card */}
+      <div className="bg-white rounded-[12px] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)] mt-[15px] mb-5">
         <div className="p-6">
           <div className="flex flex-wrap gap-[15px] items-end">
             <div>
@@ -274,7 +267,7 @@ const UserManagement = () => {
               <select
                 value={filters.role}
                 onChange={(e) => updateFilter('role', e.target.value)}
-                className="p-2 border border-gray-light rounded-lg focus:outline-none focus:border-primary"
+                className="p-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]"
               >
                 <option value="">All</option>
                 <option value="candidate">Candidate</option>
@@ -286,7 +279,7 @@ const UserManagement = () => {
               <select
                 value={filters.batch}
                 onChange={(e) => updateFilter('batch', e.target.value)}
-                className="p-2 border border-gray-light rounded-lg focus:outline-none focus:border-primary"
+                className="p-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]"
               >
                 <option value="">All</option>
                 {batchOptions.map(b => <option key={b} value={b}>{b}</option>)}
@@ -297,7 +290,7 @@ const UserManagement = () => {
               <select
                 value={filters.status}
                 onChange={(e) => updateFilter('status', e.target.value)}
-                className="p-2 border border-gray-light rounded-lg focus:outline-none focus:border-primary"
+                className="p-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]"
               >
                 <option value="">All</option>
                 <option value="1">Active</option>
@@ -309,7 +302,7 @@ const UserManagement = () => {
               <select
                 value={filters.medical_status}
                 onChange={(e) => updateFilter('medical_status', e.target.value)}
-                className="p-2 border border-gray-light rounded-lg focus:outline-none focus:border-primary"
+                className="p-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]"
               >
                 <option value="">All</option>
                 <option value="pending">Pending</option>
@@ -322,7 +315,7 @@ const UserManagement = () => {
               <select
                 value={filters.police_status}
                 onChange={(e) => updateFilter('police_status', e.target.value)}
-                className="p-2 border border-gray-light rounded-lg focus:outline-none focus:border-primary"
+                className="p-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]"
               >
                 <option value="">All</option>
                 <option value="pending">Pending</option>
@@ -335,7 +328,7 @@ const UserManagement = () => {
               <select
                 value={filters.final_status}
                 onChange={(e) => updateFilter('final_status', e.target.value)}
-                className="p-2 border border-gray-light rounded-lg focus:outline-none focus:border-primary"
+                className="p-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]"
               >
                 <option value="">All</option>
                 <option value="pending">Pending</option>
@@ -348,7 +341,7 @@ const UserManagement = () => {
               <select
                 value={filters.joining_status}
                 onChange={(e) => updateFilter('joining_status', e.target.value)}
-                className="p-2 border border-gray-light rounded-lg focus:outline-none focus:border-primary"
+                className="p-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]"
               >
                 <option value="">All</option>
                 <option value="pending">Pending</option>
@@ -363,14 +356,15 @@ const UserManagement = () => {
                 placeholder="Name or Email"
                 value={filters.search}
                 onChange={(e) => updateFilter('search', e.target.value)}
-                className="w-full p-2 border border-gray-light rounded-lg focus:outline-none focus:border-primary"
+                className="w-full p-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]"
               />
             </div>
           </div>
         </div>
       </div>
 
-      <div className="bg-white rounded-12px shadow-custom mt-[15px]">
+      {/* Users table card */}
+      <div className="bg-white rounded-[12px] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)] mt-[15px]">
         <div className="p-6">
           {loading ? (
             <p>Loading...</p>
@@ -379,37 +373,37 @@ const UserManagement = () => {
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse">
                   <thead>
-                    <tr>
-                      <th className="text-left p-3 font-semibold text-gray border-b-2 border-gray-light">ID</th>
-                      <th className="text-left p-3 font-semibold text-gray border-b-2 border-gray-light">Name</th>
-                      <th className="text-left p-3 font-semibold text-gray border-b-2 border-gray-light">Email</th>
-                      <th className="text-left p-3 font-semibold text-gray border-b-2 border-gray-light">Role</th>
-                      <th className="text-left p-3 font-semibold text-gray border-b-2 border-gray-light">Batch</th>
-                      <th className="text-left p-3 font-semibold text-gray border-b-2 border-gray-light">Status</th>
-                      <th className="text-left p-3 font-semibold text-gray border-b-2 border-gray-light">Medical</th>
-                      <th className="text-left p-3 font-semibold text-gray border-b-2 border-gray-light">Police</th>
-                      <th className="text-left p-3 font-semibold text-gray border-b-2 border-gray-light">Final</th>
-                      <th className="text-left p-3 font-semibold text-gray border-b-2 border-gray-light">Joining</th>
-                      <th className="text-left p-3 font-semibold text-gray border-b-2 border-gray-light">Actions</th>
+                    <tr className="bg-[#F9FAFB]">
+                      <th className="text-left p-3 font-semibold text-[#6B7280] border-b-2 border-[#E5E7EB]">ID</th>
+                      <th className="text-left p-3 font-semibold text-[#6B7280] border-b-2 border-[#E5E7EB]">Name</th>
+                      <th className="text-left p-3 font-semibold text-[#6B7280] border-b-2 border-[#E5E7EB]">Email</th>
+                      <th className="text-left p-3 font-semibold text-[#6B7280] border-b-2 border-[#E5E7EB]">Role</th>
+                      <th className="text-left p-3 font-semibold text-[#6B7280] border-b-2 border-[#E5E7EB]">Batch</th>
+                      <th className="text-left p-3 font-semibold text-[#6B7280] border-b-2 border-[#E5E7EB]">Status</th>
+                      <th className="text-left p-3 font-semibold text-[#6B7280] border-b-2 border-[#E5E7EB]">Medical</th>
+                      <th className="text-left p-3 font-semibold text-[#6B7280] border-b-2 border-[#E5E7EB]">Police</th>
+                      <th className="text-left p-3 font-semibold text-[#6B7280] border-b-2 border-[#E5E7EB]">Final</th>
+                      <th className="text-left p-3 font-semibold text-[#6B7280] border-b-2 border-[#E5E7EB]">Joining</th>
+                      <th className="text-left p-3 font-semibold text-[#6B7280] border-b-2 border-[#E5E7EB]">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {users.map(user => (
-                      <tr key={user.employee_id} className="hover:bg-light">
-                        <td className="py-4 px-3 border-b border-gray-light">{user.employee_id}</td>
-                        <td className="py-4 px-3 border-b border-gray-light"><strong>{user.first_name} {user.last_name}</strong></td>
-                        <td className="py-4 px-3 border-b border-gray-light">{user.email}</td>
-                        <td className="py-4 px-3 border-b border-gray-light">{user.role === 'candidate' ? 'Candidate' : 'Recruiter'}</td>
-                        <td className="py-4 px-3 border-b border-gray-light">{user.batch || '—'}</td>
-                        <td className="py-4 px-3 border-b border-gray-light">{renderAccountStatus(user.status)}</td>
-                        <td className="py-4 px-3 border-b border-gray-light">{renderStatusBadge(user.medical_status)}</td>
-                        <td className="py-4 px-3 border-b border-gray-light">{renderStatusBadge(user.police_status)}</td>
-                        <td className="py-4 px-3 border-b border-gray-light">{renderStatusBadge(user.final_status)}</td>
-                        <td className="py-4 px-3 border-b border-gray-light">{renderStatusBadge(user.joining_status)}</td>
-                        <td className="py-4 px-3 border-b border-gray-light">
+                      <tr key={user.employee_id} className="hover:bg-[#F9FAFB]">
+                        <td className="py-4 px-3 border-b border-[#E5E7EB]">{user.employee_id}</td>
+                        <td className="py-4 px-3 border-b border-[#E5E7EB]"><strong>{user.first_name} {user.last_name}</strong></td>
+                        <td className="py-4 px-3 border-b border-[#E5E7EB]">{user.email}</td>
+                        <td className="py-4 px-3 border-b border-[#E5E7EB]">{user.role === 'candidate' ? 'Candidate' : 'Recruiter'}</td>
+                        <td className="py-4 px-3 border-b border-[#E5E7EB]">{user.batch || '—'}</td>
+                        <td className="py-4 px-3 border-b border-[#E5E7EB]">{renderAccountStatus(user.status)}</td>
+                        <td className="py-4 px-3 border-b border-[#E5E7EB]">{renderStatusBadge(user.medical_status)}</td>
+                        <td className="py-4 px-3 border-b border-[#E5E7EB]">{renderStatusBadge(user.police_status)}</td>
+                        <td className="py-4 px-3 border-b border-[#E5E7EB]">{renderStatusBadge(user.final_status)}</td>
+                        <td className="py-4 px-3 border-b border-[#E5E7EB]">{renderStatusBadge(user.joining_status)}</td>
+                        <td className="py-4 px-3 border-b border-[#E5E7EB]">
                           <button
                             onClick={() => handleEdit(user)}
-                            className="bg-primary text-white border-none py-1 px-2.5 rounded-md cursor-pointer hover:bg-indigo-700 transition-colors mr-2"
+                            className="bg-[#4F46E5] text-white border-none mb-1 py-1 px-2.5 rounded-md cursor-pointer hover:bg-[#4338CA] transition-colors mr-2"
                           >
                             Edit
                           </button>
@@ -437,7 +431,7 @@ const UserManagement = () => {
                   <button
                     disabled={page === 1}
                     onClick={() => setPage(p => p - 1)}
-                    className="bg-rose-800 text-white border border-gray-light py-1.5 px-2.5 rounded-12px font-semibold text-base cursor-pointer transition-all duration-300 hover:bg-rose-900 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-rose-800 text-white border border-[#E5E7EB] py-1.5 px-2.5 rounded-[12px] font-semibold text-base cursor-pointer transition-all duration-300 hover:bg-rose-900 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Previous
                   </button>
@@ -445,7 +439,7 @@ const UserManagement = () => {
                   <button
                     disabled={page === totalPages}
                     onClick={() => setPage(p => p + 1)}
-                    className="bg-rose-800 text-white border border-gray-light py-1.5 px-2.5 rounded-12px font-semibold text-base cursor-pointer transition-all duration-300 hover:bg-rose-900 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-rose-800 text-white border border-[#E5E7EB] py-1.5 px-2.5 rounded-[12px] font-semibold text-base cursor-pointer transition-all duration-300 hover:bg-rose-900 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Next
                   </button>
@@ -456,45 +450,56 @@ const UserManagement = () => {
         </div>
       </div>
 
-      {/* Edit Modal */}
+      {/* Edit User Modal */}
       {showEditModal && (
-        <div className="modal active" onClick={() => setShowEditModal(false)}>
-          <div className="bg-white rounded-12px w-[90%] max-w-[800px] max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-            <div className="p-6 border-b border-gray-light flex justify-between items-center">
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+          onClick={() => setShowEditModal(false)}
+        >
+          <div
+            className="bg-white rounded-[12px] w-[90%] max-w-[800px] max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-6 border-b border-[#E5E7EB] flex justify-between items-center">
               <h3 className="text-lg font-semibold">Edit User</h3>
-              <span className="text-3xl cursor-pointer text-gray hover:text-dark" onClick={() => setShowEditModal(false)}>&times;</span>
+              <span
+                className="text-3xl cursor-pointer text-[#6B7280] hover:text-[#1F2937] leading-none"
+                onClick={() => setShowEditModal(false)}
+              >
+                &times;
+              </span>
             </div>
             <div className="grid grid-cols-2 gap-5 p-6">
               <div className="flex flex-col gap-2">
                 <label className="font-medium text-sm">First Name</label>
-                <input type="text" value={editForm.first_name || ''} onChange={(e) => setEditForm({ ...editForm, first_name: e.target.value })} className="p-3 border border-gray-light rounded-lg focus:outline-none focus:border-primary" />
+                <input type="text" value={editForm.first_name || ''} onChange={(e) => setEditForm({ ...editForm, first_name: e.target.value })} className="p-3 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]" />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="font-medium text-sm">Last Name</label>
-                <input type="text" value={editForm.last_name || ''} onChange={(e) => setEditForm({ ...editForm, last_name: e.target.value })} className="p-3 border border-gray-light rounded-lg focus:outline-none focus:border-primary" />
+                <input type="text" value={editForm.last_name || ''} onChange={(e) => setEditForm({ ...editForm, last_name: e.target.value })} className="p-3 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]" />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="font-medium text-sm">Email</label>
-                <input type="email" value={editForm.email || ''} onChange={(e) => setEditForm({ ...editForm, email: e.target.value })} className="p-3 border border-gray-light rounded-lg focus:outline-none focus:border-primary" />
+                <input type="email" value={editForm.email || ''} onChange={(e) => setEditForm({ ...editForm, email: e.target.value })} className="p-3 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]" />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="font-medium text-sm">Phone</label>
-                <input type="text" value={editForm.ph_no || ''} onChange={(e) => setEditForm({ ...editForm, ph_no: e.target.value })} className="p-3 border border-gray-light rounded-lg focus:outline-none focus:border-primary" />
+                <input type="text" value={editForm.ph_no || ''} onChange={(e) => setEditForm({ ...editForm, ph_no: e.target.value })} className="p-3 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]" />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="font-medium text-sm">Batch</label>
-                <input type="number" value={editForm.batch || ''} onChange={(e) => setEditForm({ ...editForm, batch: e.target.value ? parseInt(e.target.value) : '' })} className="p-3 border border-gray-light rounded-lg focus:outline-none focus:border-primary" />
+                <input type="number" value={editForm.batch || ''} onChange={(e) => setEditForm({ ...editForm, batch: e.target.value ? parseInt(e.target.value) : '' })} className="p-3 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]" />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="font-medium text-sm">Role</label>
-                <select value={editForm.role} onChange={(e) => setEditForm({ ...editForm, role: e.target.value })} className="p-3 border border-gray-light rounded-lg focus:outline-none focus:border-primary">
+                <select value={editForm.role} onChange={(e) => setEditForm({ ...editForm, role: e.target.value })} className="p-3 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]">
                   <option value="candidate">Candidate</option>
                   <option value="recruiter">Recruiter</option>
                 </select>
               </div>
               <div className="flex flex-col gap-2">
                 <label className="font-medium text-sm">Account Status</label>
-                <select value={editForm.status} onChange={(e) => setEditForm({ ...editForm, status: parseInt(e.target.value) })} className="p-3 border border-gray-light rounded-lg focus:outline-none focus:border-primary">
+                <select value={editForm.status} onChange={(e) => setEditForm({ ...editForm, status: parseInt(e.target.value) })} className="p-3 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]">
                   <option value={1}>Active</option>
                   <option value={0}>Inactive</option>
                 </select>
@@ -508,7 +513,7 @@ const UserManagement = () => {
                       <div>
                         <strong>Medical:</strong><br/>
                         {editForm.medical_file_path ? (
-                          <a href={`http://localhost:5000/api/recruiter/candidates/${editingUser?.employee_id}/documents/medical`} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                          <a href={`http://localhost:5000/api/recruiter/candidates/${editingUser?.employee_id}/documents/medical`} target="_blank" rel="noopener noreferrer" className="text-[#4F46E5] hover:underline">
                             {editForm.medical_original_filename || 'View File'}
                           </a>
                         ) : (
@@ -518,7 +523,7 @@ const UserManagement = () => {
                       <div>
                         <strong>Police:</strong><br/>
                         {editForm.police_file_path ? (
-                          <a href={`http://localhost:5000/api/recruiter/candidates/${editingUser?.employee_id}/documents/police`} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                          <a href={`http://localhost:5000/api/recruiter/candidates/${editingUser?.employee_id}/documents/police`} target="_blank" rel="noopener noreferrer" className="text-[#4F46E5] hover:underline">
                             {editForm.police_original_filename || 'View File'}
                           </a>
                         ) : (
@@ -547,7 +552,7 @@ const UserManagement = () => {
 
                   <div className="flex flex-col gap-2">
                     <label className="font-medium text-sm">Medical Status</label>
-                    <select value={editForm.medical_status} onChange={(e) => setEditForm({ ...editForm, medical_status: e.target.value })} className="p-3 border border-gray-light rounded-lg focus:outline-none focus:border-primary">
+                    <select value={editForm.medical_status} onChange={(e) => setEditForm({ ...editForm, medical_status: e.target.value })} className="p-3 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]">
                       <option value="pending">Pending</option>
                       <option value="completed">Completed</option>
                       <option value="rejected">Rejected</option>
@@ -556,13 +561,13 @@ const UserManagement = () => {
                   {editForm.medical_status === 'rejected' && (
                     <div className="flex flex-col gap-2">
                       <label className="font-medium text-sm">Medical Rejection Reason</label>
-                      <input type="text" value={editForm.medical_reason} onChange={(e) => setEditForm({ ...editForm, medical_reason: e.target.value })} className="p-3 border border-gray-light rounded-lg focus:outline-none focus:border-primary" />
+                      <input type="text" value={editForm.medical_reason} onChange={(e) => setEditForm({ ...editForm, medical_reason: e.target.value })} className="p-3 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]" />
                     </div>
                   )}
 
                   <div className="flex flex-col gap-2">
                     <label className="font-medium text-sm">Police Status</label>
-                    <select value={editForm.police_status} onChange={(e) => setEditForm({ ...editForm, police_status: e.target.value })} className="p-3 border border-gray-light rounded-lg focus:outline-none focus:border-primary">
+                    <select value={editForm.police_status} onChange={(e) => setEditForm({ ...editForm, police_status: e.target.value })} className="p-3 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]">
                       <option value="pending">Pending</option>
                       <option value="completed">Completed</option>
                       <option value="rejected">Rejected</option>
@@ -571,13 +576,13 @@ const UserManagement = () => {
                   {editForm.police_status === 'rejected' && (
                     <div className="flex flex-col gap-2">
                       <label className="font-medium text-sm">Police Rejection Reason</label>
-                      <input type="text" value={editForm.police_reason} onChange={(e) => setEditForm({ ...editForm, police_reason: e.target.value })} className="p-3 border border-gray-light rounded-lg focus:outline-none focus:border-primary" />
+                      <input type="text" value={editForm.police_reason} onChange={(e) => setEditForm({ ...editForm, police_reason: e.target.value })} className="p-3 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]" />
                     </div>
                   )}
 
                   <div className="flex flex-col gap-2">
                     <label className="font-medium text-sm">Final Clearance Status</label>
-                    <select value={editForm.final_status} onChange={(e) => setEditForm({ ...editForm, final_status: e.target.value })} className="p-3 border border-gray-light rounded-lg focus:outline-none focus:border-primary">
+                    <select value={editForm.final_status} onChange={(e) => setEditForm({ ...editForm, final_status: e.target.value })} className="p-3 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]">
                       <option value="pending">Pending</option>
                       <option value="completed">Completed</option>
                       <option value="rejected">Rejected</option>
@@ -586,13 +591,13 @@ const UserManagement = () => {
                   {editForm.final_status === 'rejected' && (
                     <div className="flex flex-col gap-2">
                       <label className="font-medium text-sm">Final Clearance Rejection Reason</label>
-                      <input type="text" value={editForm.final_reason} onChange={(e) => setEditForm({ ...editForm, final_reason: e.target.value })} className="p-3 border border-gray-light rounded-lg focus:outline-none focus:border-primary" />
+                      <input type="text" value={editForm.final_reason} onChange={(e) => setEditForm({ ...editForm, final_reason: e.target.value })} className="p-3 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]" />
                     </div>
                   )}
 
                   <div className="flex flex-col gap-2">
                     <label className="font-medium text-sm">Joining Letter Status</label>
-                    <select value={editForm.joining_status} onChange={(e) => setEditForm({ ...editForm, joining_status: e.target.value })} className="p-3 border border-gray-light rounded-lg focus:outline-none focus:border-primary">
+                    <select value={editForm.joining_status} onChange={(e) => setEditForm({ ...editForm, joining_status: e.target.value })} className="p-3 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]">
                       <option value="pending">Pending</option>
                       <option value="completed">Completed</option>
                       <option value="rejected">Rejected</option>
@@ -601,17 +606,17 @@ const UserManagement = () => {
                   {editForm.joining_status === 'rejected' && (
                     <div className="flex flex-col gap-2">
                       <label className="font-medium text-sm">Joining Letter Rejection Reason</label>
-                      <input type="text" value={editForm.joining_reason} onChange={(e) => setEditForm({ ...editForm, joining_reason: e.target.value })} className="p-3 border border-gray-light rounded-lg focus:outline-none focus:border-primary" />
+                      <input type="text" value={editForm.joining_reason} onChange={(e) => setEditForm({ ...editForm, joining_reason: e.target.value })} className="p-3 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#4F46E5]" />
                     </div>
                   )}
                 </>
               )}
             </div>
-            <div className="p-6 border-t border-gray-light flex justify-end gap-3">
-              <button onClick={handleSaveEdit} className="bg-primary text-white border-none py-3 px-6 rounded-12px font-semibold cursor-pointer transition-all duration-300 hover:bg-indigo-700 disabled:opacity-50" disabled={updating}>
+            <div className="p-6 border-t border-[#E5E7EB] flex justify-end gap-3">
+              <button onClick={handleSaveEdit} className="bg-[#4F46E5] text-white border-none py-3 px-6 rounded-[12px] font-semibold cursor-pointer transition-all duration-300 hover:bg-[#4338CA] disabled:opacity-50" disabled={updating}>
                 {updating ? 'Updating...' : 'Save'}
               </button>
-              <button onClick={() => setShowEditModal(false)} className="bg-rose-800 text-white border border-gray-light py-1.5 px-2.5 rounded-12px font-semibold text-base cursor-pointer transition-all duration-300 hover:bg-rose-900">Cancel</button>
+              <button onClick={() => setShowEditModal(false)} className="bg-rose-800 text-white border border-[#E5E7EB] py-1.5 px-2.5 rounded-[12px] font-semibold text-base cursor-pointer transition-all duration-300 hover:bg-rose-900">Cancel</button>
             </div>
           </div>
         </div>
@@ -619,11 +624,22 @@ const UserManagement = () => {
 
       {/* Upload CSV Modal */}
       {showUploadModal && (
-        <div className="modal active" onClick={() => setShowUploadModal(false)}>
-          <div className="bg-white rounded-12px w-[90%] max-w-[800px] max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-            <div className="p-6 border-b border-gray-light flex justify-between items-center">
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+          onClick={() => setShowUploadModal(false)}
+        >
+          <div
+            className="bg-white rounded-[12px] w-[90%] max-w-[800px] max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-6 border-b border-[#E5E7EB] flex justify-between items-center">
               <h3 className="text-lg font-semibold">Upload CSV</h3>
-              <span className="text-3xl cursor-pointer text-gray hover:text-dark" onClick={() => setShowUploadModal(false)}>&times;</span>
+              <span
+                className="text-3xl cursor-pointer text-[#6B7280] hover:text-[#1F2937] leading-none"
+                onClick={() => setShowUploadModal(false)}
+              >
+                &times;
+              </span>
             </div>
             <div className="grid grid-cols-2 gap-5 p-6">
               <div className="col-span-2 flex flex-col gap-2">
@@ -632,11 +648,11 @@ const UserManagement = () => {
                 <small className="text-gray-500">CSV must have columns: first_name, last_name, email, ph_no (optional), batch, role (candidate/recruiter)</small>
               </div>
             </div>
-            <div className="p-6 border-t border-gray-light flex justify-end gap-3">
-              <button onClick={handleUpload} className="bg-primary text-white border-none py-3 px-6 rounded-12px font-semibold cursor-pointer transition-all duration-300 hover:bg-indigo-700 disabled:opacity-50" disabled={uploading}>
+            <div className="p-6 border-t border-[#E5E7EB] flex justify-end gap-3">
+              <button onClick={handleUpload} className="bg-[#4F46E5] text-white border-none py-3 px-6 rounded-[12px] font-semibold cursor-pointer transition-all duration-300 hover:bg-[#4338CA] disabled:opacity-50" disabled={uploading}>
                 {uploading ? 'Uploading...' : 'Upload'}
               </button>
-              <button onClick={() => setShowUploadModal(false)} className="bg-rose-800 text-white border border-gray-light py-1.5 px-2.5 rounded-12px font-semibold text-base cursor-pointer transition-all duration-300 hover:bg-rose-900">Cancel</button>
+              <button onClick={() => setShowUploadModal(false)} className="bg-rose-800 text-white border border-[#E5E7EB] py-1.5 px-2.5 rounded-[12px] font-semibold text-base cursor-pointer transition-all duration-300 hover:bg-rose-900">Cancel</button>
             </div>
             {uploadResult && (
               <div className={`px-6 pb-6 ${uploadResult.success ? 'text-green-600' : 'text-red-600'}`}>

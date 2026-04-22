@@ -83,16 +83,16 @@ const HospitalListRecruiter = () => {
   };
 
   return (
-    <section id="hospital-list" className="block">
+    <section className="block">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold text-dark">Hospital List</h2>
+        <h2 className="text-xl font-bold text-[#1F2937]">Hospital List</h2>
         <div className="flex gap-2.5">
           <input
             type="text"
             placeholder="Search by name or address"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="py-2 px-2.5 rounded-md border border-gray-light focus:outline-none focus:border-indigo-600"
+            className="py-2 px-2.5 rounded-md border border-[#E5E7EB] focus:outline-none focus:border-indigo-600"
           />
           <button
             className="bg-indigo-600 text-white border-none py-3 px-6 rounded-[12px] font-semibold cursor-pointer flex items-center gap-2 transition-all duration-300 hover:bg-indigo-700 hover:-translate-y-0.5"
@@ -103,7 +103,7 @@ const HospitalListRecruiter = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-[12px] shadow-custom mt-[15px]">
+      <div className="bg-white rounded-[12px] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)] mt-[15px]">
         <div className="p-6">
           <h3 className="text-lg font-semibold mb-2">Upload CSV File</h3>
           <p className="text-sm text-gray-600">CSV must have columns: name, address</p>
@@ -115,16 +115,16 @@ const HospitalListRecruiter = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-[12px] shadow-custom mt-[15px]">
+      <div className="bg-white rounded-[12px] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)] mt-[15px]">
         <div className="p-6">
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
-                <tr>
-                  <th className="text-left p-3 font-semibold text-gray border-b-2 border-gray-light">ID</th>
-                  <th className="text-left p-3 font-semibold text-gray border-b-2 border-gray-light">Name</th>
-                  <th className="text-left p-3 font-semibold text-gray border-b-2 border-gray-light">Address</th>
-                  <th className="text-left p-3 font-semibold text-gray border-b-2 border-gray-light">Actions</th>
+                <tr className="bg-[#F9FAFB]">
+                  <th className="text-left p-3 font-semibold text-[#6B7280] border-b-2 border-[#E5E7EB]">ID</th>
+                  <th className="text-left p-3 font-semibold text-[#6B7280] border-b-2 border-[#E5E7EB]">Name</th>
+                  <th className="text-left p-3 font-semibold text-[#6B7280] border-b-2 border-[#E5E7EB]">Address</th>
+                  <th className="text-left p-3 font-semibold text-[#6B7280] border-b-2 border-[#E5E7EB]">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -134,11 +134,11 @@ const HospitalListRecruiter = () => {
                   <tr><td colSpan="4" className="py-4 px-3 text-center">No hospitals found</td></tr>
                 ) : (
                   hospitals.map(h => (
-                    <tr key={h.id} className="hover:bg-light">
-                      <td className="py-4 px-3 border-b border-gray-light">{h.id}</td>
-                      <td className="py-4 px-3 border-b border-gray-light">{h.name}</td>
-                      <td className="py-4 px-3 border-b border-gray-light">{h.address}</td>
-                      <td className="py-4 px-3 border-b border-gray-light">
+                    <tr key={h.id} className="hover:bg-[#F9FAFB]">
+                      <td className="py-4 px-3 border-b border-[#E5E7EB]">{h.id}</td>
+                      <td className="py-4 px-3 border-b border-[#E5E7EB]">{h.name}</td>
+                      <td className="py-4 px-3 border-b border-[#E5E7EB]">{h.address}</td>
+                      <td className="py-4 px-3 border-b border-[#E5E7EB]">
                         <button
                           onClick={() => { setEditingHospital(h); setFormData({ name: h.name, address: h.address }); setShowModal(true); }}
                           className="bg-indigo-600 text-white border-none py-1 px-2.5 rounded-md cursor-pointer hover:bg-indigo-700 transition-colors mr-2.5"
@@ -163,7 +163,7 @@ const HospitalListRecruiter = () => {
               <button
                 disabled={page === 1}
                 onClick={() => setPage(p => p - 1)}
-                className="bg-rose-800 text-white border border-gray-light py-1.5 px-2.5 rounded-[12px] font-semibold text-base cursor-pointer transition-all duration-300 hover:bg-rose-900 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-rose-800 text-white border border-[#E5E7EB] py-1.5 px-2.5 rounded-[12px] font-semibold text-base cursor-pointer transition-all duration-300 hover:bg-rose-900 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Previous
               </button>
@@ -171,7 +171,7 @@ const HospitalListRecruiter = () => {
               <button
                 disabled={page === totalPages}
                 onClick={() => setPage(p => p + 1)}
-                className="bg-rose-800 text-white border border-gray-light py-1.5 px-2.5 rounded-[12px] font-semibold text-base cursor-pointer transition-all duration-300 hover:bg-rose-900 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-rose-800 text-white border border-[#E5E7EB] py-1.5 px-2.5 rounded-[12px] font-semibold text-base cursor-pointer transition-all duration-300 hover:bg-rose-900 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Next
               </button>
@@ -180,13 +180,24 @@ const HospitalListRecruiter = () => {
         </div>
       </div>
 
-      {/* Modal for Add/Edit */}
+      {/* Modal – fixed overlay with proper Tailwind classes */}
       {showModal && (
-        <div className="modal active" onClick={() => setShowModal(false)}>
-          <div className="bg-white rounded-[12px] w-[90%] max-w-[800px] max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-            <div className="p-6 border-b border-gray-light flex justify-between items-center">
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+          onClick={() => setShowModal(false)}
+        >
+          <div
+            className="bg-white rounded-[12px] w-[90%] max-w-[800px] max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-6 border-b border-[#E5E7EB] flex justify-between items-center">
               <h3 className="text-lg font-semibold">{editingHospital ? 'Edit Hospital' : 'Add Hospital'}</h3>
-              <span className="text-3xl cursor-pointer text-gray hover:text-dark" onClick={() => setShowModal(false)}>&times;</span>
+              <span
+                className="text-3xl cursor-pointer text-[#6B7280] hover:text-[#1F2937] leading-none"
+                onClick={() => setShowModal(false)}
+              >
+                &times;
+              </span>
             </div>
             <div className="grid grid-cols-2 gap-5 p-6">
               <div className="flex flex-col gap-2">
@@ -195,7 +206,7 @@ const HospitalListRecruiter = () => {
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="p-3 border border-gray-light rounded-lg focus:outline-none focus:border-primary"
+                  className="p-3 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-indigo-600"
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -204,13 +215,23 @@ const HospitalListRecruiter = () => {
                   type="text"
                   value={formData.address}
                   onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                  className="p-3 border border-gray-light rounded-lg focus:outline-none focus:border-primary"
+                  className="p-3 border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-indigo-600"
                 />
               </div>
             </div>
-            <div className="p-6 border-t border-gray-light flex justify-end gap-3">
-              <button onClick={handleSave} className="bg-primary text-white border-none py-3 px-6 rounded-[12px] font-semibold cursor-pointer transition-all duration-300 hover:bg-indigo-700">Save</button>
-              <button onClick={() => setShowModal(false)} className="bg-rose-800 text-white border border-gray-light py-1.5 px-2.5 rounded-[12px] font-semibold text-base cursor-pointer transition-all duration-300 hover:bg-rose-900">Cancel</button>
+            <div className="p-6 border-t border-[#E5E7EB] flex justify-end gap-3">
+              <button
+                onClick={handleSave}
+                className="bg-indigo-600 text-white border-none py-3 px-6 rounded-[12px] font-semibold cursor-pointer transition-all duration-300 hover:bg-indigo-700"
+              >
+                Save
+              </button>
+              <button
+                onClick={() => setShowModal(false)}
+                className="bg-rose-800 text-white border border-[#E5E7EB] py-1.5 px-2.5 rounded-[12px] font-semibold text-base cursor-pointer transition-all duration-300 hover:bg-rose-900"
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>
